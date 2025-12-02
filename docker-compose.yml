@@ -1,0 +1,28 @@
+services:
+  app:
+    build: .
+    ports:
+      - "8888:80"
+    depends_on:
+      - db
+    environment:
+      - DB_HOST=db
+      - DB_NAME=money_tracker
+      - DB_USER=root
+      - DB_PASS=root
+    # volumes:                <-- ВИДАЛЯЄМО ЦЕ!
+    #   - .:/var/www/html     <-- І ЦЕ! (Ми відключаємо зв'язок з Windows)
+
+  db:
+    image: mysql:8.0
+    command: --default-authentication-plugin=mysql_native_password
+    restart: always
+    environment:
+      MYSQL_DATABASE: money_tracker
+      MYSQL_ROOT_PASSWORD: root
+    volumes:
+      - db_data:/var/lib/mysql
+      - ./database.sql:/docker-entrypoint-initdb.d/init.sql
+
+volumes:
+  db_data:

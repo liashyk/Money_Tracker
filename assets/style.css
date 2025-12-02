@@ -1,0 +1,224 @@
+/* Імпорт шрифту */
+@import url('https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;600;700&display=swap');
+
+/* --- Змінні кольорів --- */
+:root {
+    /* Світла тема (Light) */
+    --bg-body: #f0f2f5;
+    --bg-card: #ffffff;
+    --text-main: #2d3436;
+    --text-muted: #6c757d;
+    --border-color: #e1e4e8;
+    --input-bg: #f8f9fa;
+    --shadow-soft: 0 10px 25px -5px rgba(0, 0, 0, 0.05);
+    --nav-bg: #ffffff;
+}
+
+[data-theme="dark"] {
+    /* Темна тема (Dark) */
+    --bg-body: #18191a;       /* Темно-сірий фон (як у Facebook/Instagram) */
+    --bg-card: #242526;       /* Трохи світліший для карток */
+    --text-main: #e4e6eb;     /* Майже білий текст */
+    --text-muted: #b0b3b8;
+    --border-color: #3e4042;
+    --input-bg: #3a3b3c;
+    --shadow-soft: 0 4px 15px rgba(0, 0, 0, 0.3); /* Тіні темніші */
+    --nav-bg: #242526;
+}
+
+/* --- Застосування змінних --- */
+body {
+    background-color: var(--bg-body);
+    color: var(--text-main);
+    transition: background-color 0.3s, color 0.3s; /* Плавний перехід */
+}
+
+.card, .modal-content {
+    background: var(--bg-card);
+    color: var(--text-main);
+    box-shadow: var(--shadow-soft);
+}
+
+.navbar {
+    background: var(--nav-bg) !important; /* Перебиваємо bootstrap */
+    box-shadow: var(--shadow-soft);
+}
+
+.navbar-brand, .nav-link {
+    color: var(--text-main) !important;
+}
+
+/* Форми в темній темі */
+.form-control, .form-select {
+    background-color: var(--input-bg);
+    border-color: var(--border-color);
+    color: var(--text-main);
+}
+
+.form-control:focus, .form-select:focus {
+    background-color: var(--input-bg);
+    color: var(--text-main);
+    border-color: #764ba2;
+}
+
+/* Інші елементи */
+.text-muted { color: var(--text-muted) !important; }
+.bg-white { background-color: var(--bg-card) !important; } /* Хак для bootstrap блоків */
+.bg-light { background-color: var(--bg-body) !important; }
+
+/* Кнопка перемикання теми */
+.theme-toggle {
+    cursor: pointer;
+    font-size: 1.2rem;
+    padding: 8px 12px;
+    border-radius: 50%;
+    transition: 0.2s;
+}
+.theme-toggle:hover { background-color: rgba(128,128,128, 0.2); }
+
+body {
+    font-family: 'Poppins', sans-serif;
+    background-color: var(--bg-color);
+    color: var(--text-primary);
+    -webkit-font-smoothing: antialiased;
+}
+
+/* --- Картки (Cards) --- */
+.card {
+    border: none;
+    background: var(--card-bg);
+    border-radius: 20px;
+    box-shadow: var(--shadow-soft);
+    transition: all 0.3s ease;
+}
+
+.card:hover {
+    transform: translateY(-2px);
+    box-shadow: var(--shadow-hover);
+}
+
+/* --- Банківські картки (Wallets) --- */
+.wallet-card {
+    border-radius: 20px;
+    color: white;
+    padding: 25px;
+    position: relative;
+    overflow: hidden;
+    height: 180px;
+    display: flex;
+    flex-direction: column;
+    justify-content: space-between;
+    transition: transform 0.3s ease, box-shadow 0.3s ease;
+    cursor: pointer;
+    box-shadow: 0 10px 20px rgba(0,0,0,0.15);
+}
+
+.wallet-card::before {
+    content: '';
+    position: absolute;
+    top: -50%;
+    left: -50%;
+    width: 200%;
+    height: 200%;
+    background: radial-gradient(circle, rgba(255,255,255,0.2) 0%, transparent 60%);
+    transform: rotate(45deg);
+    pointer-events: none;
+}
+
+.wallet-card:hover {
+    transform: translateY(-5px) scale(1.02);
+    box-shadow: 0 15px 30px rgba(0,0,0,0.25);
+}
+
+.card-chip {
+    width: 40px;
+    opacity: 0.8;
+}
+
+.card-number {
+    font-family: 'Courier New', monospace;
+    letter-spacing: 2px;
+    opacity: 0.8;
+    font-size: 0.9rem;
+}
+
+/* Кнопка редагування на картці */
+.edit-btn {
+    position: absolute;
+    top: 15px;
+    right: 15px;
+    background: rgba(255, 255, 255, 0.2);
+    backdrop-filter: blur(5px);
+    border: none;
+    color: white;
+    border-radius: 12px;
+    width: 35px;
+    height: 35px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    transition: 0.2s;
+    z-index: 2;
+}
+.edit-btn:hover { background: rgba(255, 255, 255, 0.4); transform: scale(1.1); }
+
+/* --- Форми та Inputs --- */
+.form-control, .form-select {
+    border-radius: 12px;
+    border: 1px solid #e1e4e8;
+    padding: 12px 15px;
+    background-color: #f8f9fa;
+    transition: all 0.2s;
+}
+
+.form-control:focus, .form-select:focus {
+    background-color: #fff;
+    border-color: #764ba2;
+    box-shadow: 0 0 0 4px rgba(118, 75, 162, 0.1);
+}
+
+/* --- Кнопки --- */
+.btn-primary, .btn-dark, .btn-success {
+    border-radius: 12px;
+    padding: 10px 20px;
+    font-weight: 500;
+    letter-spacing: 0.5px;
+    border: none;
+    transition: 0.3s;
+}
+
+.btn-primary { background: var(--primary-gradient); box-shadow: 0 4px 15px rgba(118, 75, 162, 0.3); }
+.btn-primary:hover { transform: translateY(-2px); box-shadow: 0 6px 20px rgba(118, 75, 162, 0.4); }
+
+.btn-dark { background: #2d3436; }
+
+/* --- Badges & Text --- */
+.total-badge {
+    font-size: 1.8rem;
+    font-weight: 700;
+    background: -webkit-linear-gradient(45deg, #11998e, #38ef7d);
+    -webkit-background-clip: text;
+    -webkit-text-fill-color: transparent;
+}
+
+.currency-switch {
+    border-radius: 12px;
+    border: 2px solid #eef2f7; /* Або var(--border-color) для темної теми */
+    font-weight: 600;
+    cursor: pointer;
+    text-align: center;
+    
+    /* --- МАГІЯ ТУТ: Прибираємо стрілку --- */
+    
+    /* 1. Вимикаємо стандартний вигляд браузера */
+    -webkit-appearance: none;
+    -moz-appearance: none;
+    appearance: none;
+
+    /* 2. Прибираємо SVG-стрілку, яку малює Bootstrap */
+    background-image: none !important;
+
+    /* 3. Прибираємо правий відступ, який резервувався під стрілку */
+    padding-right: 12px !important; 
+    padding-left: 12px !important;
+}
