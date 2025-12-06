@@ -5,6 +5,7 @@ let globalData = null;
 let donutChart = null;
 let barChart = null;
 let editModalInstance = null;
+let dailyChart = null; 
 
 document.addEventListener("DOMContentLoaded", async () => {
     await fetchRates();
@@ -81,6 +82,7 @@ function loadCharts() {
         drawDonut(catLabels, catData);
         drawBar(inc, exp);
     });
+    loadDailyChart();
 }
 
 function drawDonut(labels, values) {
@@ -207,4 +209,64 @@ function updateThemeIcon(isDark) {
     } else {
         btn.innerHTML = '<i class="bi bi-moon-stars-fill text-dark"></i>'; // Місяць
     }
+}
+
+function loadDailyChart() {
+    fetch('api.php?action=get_daily_stats')
+    .then(res => res.json())
+    .then(data => {
+        const ctx = document.getElementById('dailyChart').getContext('2d');
+
+        // 1. Готуємо дані (конвертуємо валюту!)
+        const labels = data.map(d => {
+            // Форматуємо дату (напр. 2023-10-25 -> 25.10)
+            const dateParts = d.date.split('-'); 
+            return `${dateParts[2]}.${dateParts[1]}`;
+        });
+        const values = data.map(d => convert(d.total));
+
+        // 2. Видаляємо старий графік, якщо є
+        if (dailyChart) dailyChart.destroy();
+
+        // 3. Малюємо новий
+        dailyChart = new Chart(ctx, {
+            type: 'line', // Лінійний графік
+            data: {
+                labels: labels,
+                datasets: [{
+                    label: `Витрати (${symbols[currentCurrency]})`,
+                    data: values,
+                    borderColor: '#764ba2', // Фіолетовий колір лінії
+                    backgroundColor: 'rgba(118, 75, 162, 0.1)', // Заливка під лінією
+                    borderWidth: 3,
+                    tension: 0.4, // Плавність ліній (криві Безьє)
+                    fill: true,   // Зафарбувати область під графіком
+                    pointBackgroundColor: '#ffffff',
+                    pointBorderColor: '#764ba2',
+                    pointRadius: 4
+                }]
+            },
+            options: {
+                responsive: true,
+                maintainAspectRatio: false,
+                plugins: {
+                    legend: { display: false },
+                    tooltip: { 
+                        callbacks: { 
+                            label: (c) => ` ${c.raw} ${symbols[currentCurrency]}` 
+                        } 
+                    }
+                },
+                scales: {
+                    y: { 
+                        beginAtZero: true,
+                        grid: { color: 'rgba(0,0,0,0.05)' }
+                    },
+                    x: {
+                        grid: { display: false }
+                    }
+                }
+            }
+        });
+    });
 }

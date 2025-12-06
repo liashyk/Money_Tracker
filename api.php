@@ -109,4 +109,20 @@ if ($action == 'delete_wallet' && $_SERVER['REQUEST_METHOD'] == 'POST') {
     echo json_encode(['success' => true]);
     exit;
 }
+
+// --- 5. Статистика по днях (останні 30 днів) ---
+if ($action == 'get_daily_stats') {
+    $stmt = $pdo->prepare("
+        SELECT date, SUM(amount) as total 
+        FROM transactions 
+        WHERE user_id = ? 
+          AND type = 'expense' 
+          AND date >= DATE_SUB(CURDATE(), INTERVAL 30 DAY)
+        GROUP BY date 
+        ORDER BY date ASC
+    ");
+    $stmt->execute([$user_id]);
+    echo json_encode($stmt->fetchAll(PDO::FETCH_ASSOC));
+    exit;
+}
 ?>

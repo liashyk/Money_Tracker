@@ -37,4 +37,31 @@
 <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js"></script>
 <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
 <script src="assets/app.js"></script> </body>
+<script>
+    const toggleBtn = document.getElementById('theme-toggle');
+    const body = document.body;
+
+    // 1. Проверяем, была ли сохранена тема ранее
+    const savedTheme = localStorage.getItem('theme');
+    
+    // Если в памяти 'dark', сразу включаем её
+    if (savedTheme === 'dark') {
+        body.classList.add('dark-mode');
+        toggleBtn.innerText = '☀️ Тема'; // Меняем иконку
+    }
+
+    // 2. Обработчик клика
+    toggleBtn.addEventListener('click', () => {
+        body.classList.toggle('dark-mode');
+        
+        // Сохраняем выбор пользователя
+        if (body.classList.contains('dark-mode')) {
+            localStorage.setItem('theme', 'dark');
+            toggleBtn.innerText = '☀️ Тема';
+        } else {
+            localStorage.setItem('theme', 'light');
+            toggleBtn.innerText = '🌙 Тема';
+        }
+    });
+</script>
 </html>

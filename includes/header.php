@@ -32,11 +32,7 @@ if (!isset($_SESSION['user_id'])) { header("Location: login.php"); exit; }
                 <option value="EUR">€ EUR</option>
                 <option value="GBP">£ GBP</option>
             </select>
-            <!-- <button class="btn btn-link theme-toggle text-decoration-none me-2" onclick="toggleTheme()" id="themeBtn">
-                <i class="bi bi-moon-stars-fill"></i>
-            </button>
-
-            <a href="login.php" class="btn btn-light rounded-circle" ...>             -->
+            <button id="theme-toggle" class="btn btn-secondary">🌙 Тема</button>
             <a href="login.php" class="btn btn-light rounded-circle" style="width: 40px; height: 40px; display:flex; align-items:center; justify-content:center;">
                 <i class="bi bi-box-arrow-right text-danger"></i>
             </a>

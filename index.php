@@ -33,18 +33,39 @@
                     </div>
 
                     <div class="mb-3">
-                        <label>Категорія</label>
-                        <input type="text" name="category" id="category" class="form-control" list="catList" placeholder="Оберіть..." required>
-                        <datalist id="catList">
-                            <option value="Їжа"><option value="Транспорт"><option value="Розваги"><option value="Житло">
-                        </datalist>
+                        <label class="form-label">Категорія</label>
+                        <select name="category" id="category" class="form-select" required>
+                            <option value="" disabled selected>Оберіть категорію...</option>
+                            
+                            <optgroup label="Витрати">
+                                <option value="🍔 Їжа та кафе">🍔 Їжа та кафе</option>
+                                <option value="🛒 Продукти">🛒 Продукти</option>
+                                <option value="🚌 Транспорт">🚌 Транспорт</option>
+                                <option value="🏠 Житло/Комуналка">🏠 Житло/Комуналка</option>
+                                <option value="💊 Здоров'я">💊 Здоров'я</option>
+                                <option value="🎬 Розваги">🎬 Розваги</option>
+                                <option value="👕 Одяг">👕 Одяг</option>
+                                <option value="📚 Освіта">📚 Освіта</option>
+                                <option value="🎁 Подарунки">🎁 Подарунки</option>
+                                <option value="🔌 Техніка">🔌 Техніка</option>
+                            </optgroup>
+
+                            <optgroup label="Доходи">
+                                <option value="💰 Зарплата">💰 Зарплата</option>
+                                <option value="💸 Підробіток">💸 Підробіток</option>
+                                <option value="🎁 Подарунок">🎁 Подарунок</option>
+                                <option value="📈 Інвестиції">📈 Інвестиції</option>
+                            </optgroup>
+
+                            <option value="📦 Інше">📦 Інше</option>
+                        </select>
                     </div>
 
                     <div class="mb-3">
                         <input type="date" name="date" id="date" class="form-control" required>
                     </div>
 
-                    <button type="submit" class="btn btn-dark w-100">Зберегти</button>
+                    <button type="submit" class="btn btn-dark btn-primary w-100" >Зберегти</button>
                 </form>
             </div>
         </div>
@@ -59,6 +80,14 @@
             <div class="card shadow-sm p-3 mb-4">
                 <h6 class="text-center text-muted">Доходи vs Витрати</h6>
                 <canvas id="barChart"></canvas>
+            </div>
+        </div>
+        <div class="col-12">
+            <div class="card shadow-sm p-3 mb-4">
+                <h6 class="text-center text-muted">Динаміка витрат (30 днів)</h6>
+                <div style="height: 300px;">
+                    <canvas id="dailyChart"></canvas>
+                </div>
             </div>
         </div>
     </div>

@@ -1,95 +1,91 @@
-/* Імпорт шрифту */
+/* 1. Импорт шрифта */
 @import url('https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;600;700&display=swap');
 
-/* --- Змінні кольорів --- */
+/* 2. НАСТРОЙКИ ПЕРЕМЕННЫХ (ЦВЕТА) */
 :root {
-    /* Світла тема (Light) */
+    /* --- СВЕТЛАЯ ТЕМА (ПО УМОЛЧАНИЮ) --- */
     --bg-body: #f0f2f5;
     --bg-card: #ffffff;
     --text-main: #2d3436;
     --text-muted: #6c757d;
     --border-color: #e1e4e8;
-    --input-bg: #f8f9fa;
+    --input-bg: #ffffff;        /* Фон полей ввода */
+    --input-border: #ced4da;
+    --accent-color: #0d6efd;    /* Основной цвет ссылок/акцентов */
     --shadow-soft: 0 10px 25px -5px rgba(0, 0, 0, 0.05);
+    --shadow-hover: 0 20px 40px -5px rgba(0, 0, 0, 0.1);
     --nav-bg: #ffffff;
 }
 
-[data-theme="dark"] {
-    /* Темна тема (Dark) */
-    --bg-body: #18191a;       /* Темно-сірий фон (як у Facebook/Instagram) */
-    --bg-card: #242526;       /* Трохи світліший для карток */
-    --text-main: #e4e6eb;     /* Майже білий текст */
+body.dark-mode {
+    /* --- ТЕМНАЯ ТЕМА (Overrides) --- */
+    --bg-body: #18191a;         /* Темно-серый фон (стиль Facebook) */
+    --bg-card: #242526;         /* Чуть светлее для карточек */
+    --text-main: #e4e6eb;       /* Почти белый текст */
     --text-muted: #b0b3b8;
     --border-color: #3e4042;
-    --input-bg: #3a3b3c;
-    --shadow-soft: 0 4px 15px rgba(0, 0, 0, 0.3); /* Тіні темніші */
+    --input-bg: #3a3b3c;        /* Темно-серый фон полей */
+    --input-border: #505153;
+    --accent-color: #3d8bfd;    /* Ярче для темного фона */
+    --shadow-soft: 0 4px 15px rgba(0, 0, 0, 0.3);
+    --shadow-hover: 0 8px 25px rgba(0, 0, 0, 0.4);
     --nav-bg: #242526;
 }
 
-/* --- Застосування змінних --- */
-body {
-    background-color: var(--bg-body);
-    color: var(--text-main);
-    transition: background-color 0.3s, color 0.3s; /* Плавний перехід */
-}
-
-.card, .modal-content {
-    background: var(--bg-card);
-    color: var(--text-main);
-    box-shadow: var(--shadow-soft);
-}
-
-.navbar {
-    background: var(--nav-bg) !important; /* Перебиваємо bootstrap */
-    box-shadow: var(--shadow-soft);
-}
-
-.navbar-brand, .nav-link {
-    color: var(--text-main) !important;
-}
-
-/* Форми в темній темі */
-.form-control, .form-select {
-    background-color: var(--input-bg);
-    border-color: var(--border-color);
-    color: var(--text-main);
-}
-
-.form-control:focus, .form-select:focus {
-    background-color: var(--input-bg);
-    color: var(--text-main);
-    border-color: #764ba2;
-}
-
-/* Інші елементи */
-.text-muted { color: var(--text-muted) !important; }
-.bg-white { background-color: var(--bg-card) !important; } /* Хак для bootstrap блоків */
-.bg-light { background-color: var(--bg-body) !important; }
-
-/* Кнопка перемикання теми */
-.theme-toggle {
-    cursor: pointer;
-    font-size: 1.2rem;
-    padding: 8px 12px;
-    border-radius: 50%;
-    transition: 0.2s;
-}
-.theme-toggle:hover { background-color: rgba(128,128,128, 0.2); }
-
+/* 3. БАЗОВЫЕ СТИЛИ */
 body {
     font-family: 'Poppins', sans-serif;
-    background-color: var(--bg-color);
-    color: var(--text-primary);
+    background-color: var(--bg-body);
+    color: var(--text-main);
+    transition: background-color 0.3s, color 0.3s;
     -webkit-font-smoothing: antialiased;
 }
 
-/* --- Картки (Cards) --- */
-.card {
-    border: none;
-    background: var(--card-bg);
+a {
+    color: var(--accent-color);
+    text-decoration: none;
+}
+
+/* 4. КРИТИЧЕСКОЕ ИСПРАВЛЕНИЕ ДЛЯ ФОРМ И INPUTS */
+/* Принудительно перекрашиваем все поля ввода, чтобы они не были белыми */
+input, textarea, select, .form-control, .form-select {
+    background-color: var(--input-bg) !important;
+    color: var(--text-main) !important;
+    border: 1px solid var(--input-border) !important;
+    transition: all 0.2s;
+}
+
+/* Цвет подсказки (placeholder) */
+input::placeholder, textarea::placeholder {
+    color: var(--text-muted) !important;
+    opacity: 0.7;
+}
+
+/* Активное состояние поля */
+input:focus, textarea:focus, select:focus, .form-control:focus {
+    background-color: var(--input-bg) !important;
+    color: var(--text-main) !important;
+    border-color: var(--accent-color) !important;
+    box-shadow: 0 0 0 4px rgba(13, 110, 253, 0.25);
+    outline: none;
+}
+
+/* Убираем стандартную стрелку в select (для красоты), если нужно */
+.form-select {
+    background-image: url("data:image/svg+xml,%3csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 16 16'%3e%3cpath fill='none' stroke='%23999' stroke-linecap='round' stroke-linejoin='round' stroke-width='2' d='m2 5 6 6 6-6'/%3e%3c/svg%3e") !important;
+    background-repeat: no-repeat !important;
+    background-position: right 0.75rem center !important;
+    background-size: 16px 12px !important;
+}
+
+/* 5. КАРТОЧКИ И КОНТЕЙНЕРЫ */
+.card, .modal-content, .bg-white {
+    background-color: var(--bg-card) !important;
+    color: var(--text-main);
+    border: 1px solid var(--border-color);
     border-radius: 20px;
     box-shadow: var(--shadow-soft);
-    transition: all 0.3s ease;
+    transition: background-color 0.3s, box-shadow 0.3s;
 }
 
 .card:hover {
@@ -97,10 +93,21 @@ body {
     box-shadow: var(--shadow-hover);
 }
 
-/* --- Банківські картки (Wallets) --- */
+/* 6. НАВИГАЦИЯ */
+.navbar {
+    background-color: var(--nav-bg) !important;
+    border-bottom: 1px solid var(--border-color);
+    box-shadow: var(--shadow-soft);
+}
+
+.navbar-brand, .nav-link {
+    color: var(--text-main) !important;
+}
+
+/* 7. ВАШИ СПЕЦИАЛЬНЫЕ СТИЛИ (Wallet Cards) */
 .wallet-card {
     border-radius: 20px;
-    color: white;
+    color: white; /* Тут текст всегда белый, т.к. фон цветной */
     padding: 25px;
     position: relative;
     overflow: hidden;
@@ -111,6 +118,7 @@ body {
     transition: transform 0.3s ease, box-shadow 0.3s ease;
     cursor: pointer;
     box-shadow: 0 10px 20px rgba(0,0,0,0.15);
+    background: linear-gradient(135deg, #667eea 0%, #764ba2 100%); /* Дефолтный фон */
 }
 
 .wallet-card::before {
@@ -130,19 +138,10 @@ body {
     box-shadow: 0 15px 30px rgba(0,0,0,0.25);
 }
 
-.card-chip {
-    width: 40px;
-    opacity: 0.8;
-}
+.card-chip { width: 40px; opacity: 0.8; }
+.card-number { font-family: 'Courier New', monospace; letter-spacing: 2px; opacity: 0.8; font-size: 0.9rem; }
 
-.card-number {
-    font-family: 'Courier New', monospace;
-    letter-spacing: 2px;
-    opacity: 0.8;
-    font-size: 0.9rem;
-}
-
-/* Кнопка редагування на картці */
+/* Кнопка редактирования на карточке */
 .edit-btn {
     position: absolute;
     top: 15px;
@@ -162,37 +161,38 @@ body {
 }
 .edit-btn:hover { background: rgba(255, 255, 255, 0.4); transform: scale(1.1); }
 
-/* --- Форми та Inputs --- */
-.form-control, .form-select {
-    border-radius: 12px;
-    border: 1px solid #e1e4e8;
-    padding: 12px 15px;
-    background-color: #f8f9fa;
-    transition: all 0.2s;
-}
-
-.form-control:focus, .form-select:focus {
-    background-color: #fff;
-    border-color: #764ba2;
-    box-shadow: 0 0 0 4px rgba(118, 75, 162, 0.1);
-}
-
-/* --- Кнопки --- */
-.btn-primary, .btn-dark, .btn-success {
+/* 8. КНОПКИ (Bootstrap Overrides) */
+.btn {
     border-radius: 12px;
     padding: 10px 20px;
     font-weight: 500;
-    letter-spacing: 0.5px;
-    border: none;
-    transition: 0.3s;
 }
 
-.btn-primary { background: var(--primary-gradient); box-shadow: 0 4px 15px rgba(118, 75, 162, 0.3); }
-.btn-primary:hover { transform: translateY(-2px); box-shadow: 0 6px 20px rgba(118, 75, 162, 0.4); }
+.btn-primary {
+    background-color: var(--accent-color);
+    border-color: var(--accent-color);
+}
 
-.btn-dark { background: #2d3436; }
+/* 9. ПРОЧИЕ ЭЛЕМЕНТЫ */
+.text-muted { color: var(--text-muted) !important; }
+.bg-light { background-color: var(--bg-body) !important; }
 
-/* --- Badges & Text --- */
+/* Свич валюты */
+.currency-switch {
+    border-radius: 12px;
+    border: 2px solid var(--border-color);
+    background-color: var(--bg-card);
+    color: var(--text-main);
+    font-weight: 600;
+    cursor: pointer;
+    text-align: center;
+    -webkit-appearance: none;
+    -moz-appearance: none;
+    appearance: none;
+    padding: 5px 15px !important;
+}
+
+/* Красивый градиентный текст для суммы */
 .total-badge {
     font-size: 1.8rem;
     font-weight: 700;
@@ -201,24 +201,50 @@ body {
     -webkit-text-fill-color: transparent;
 }
 
-.currency-switch {
-    border-radius: 12px;
-    border: 2px solid #eef2f7; /* Або var(--border-color) для темної теми */
-    font-weight: 600;
-    cursor: pointer;
-    text-align: center;
-    
-    /* --- МАГІЯ ТУТ: Прибираємо стрілку --- */
-    
-    /* 1. Вимикаємо стандартний вигляд браузера */
-    -webkit-appearance: none;
-    -moz-appearance: none;
-    appearance: none;
+/* Виправляємо чорний текст Bootstrap (.text-dark) */
+body.dark-mode .text-dark {
+    color: #ffffff !important;
+}
 
-    /* 2. Прибираємо SVG-стрілку, яку малює Bootstrap */
-    background-image: none !important;
 
-    /* 3. Прибираємо правий відступ, який резервувався під стрілку */
-    padding-right: 12px !important; 
-    padding-left: 12px !important;
+/* 7. Кнопки та інше */
+.btn { border-radius: 12px; font-weight: 500; }
+.btn-primary { background-color: var(--accent-color); border-color: var(--accent-color); }
+
+/* --- ВИПРАВЛЕННЯ ДЛЯ ЯСКРАВИХ КНОПОК (ЗБЕРЕГТИ/ДОДАТИ) --- */
+/* Гарантуємо, що кнопки Primary, Success та Submit залишаться кольоровими */
+body.dark-mode .btn-primary,
+body.dark-mode input[type="submit"] {
+    background-color: var(--accent-color) !important;
+    border-color: var(--accent-color) !important;
+    color: #ffffff !important;
+}
+
+body.dark-mode .btn-success {
+    background-color: #28a745 !important; /* Яскравий зелений для темної теми */
+    border-color: #28a745 !important;
+    color: #ffffff !important;
+}
+
+/* --- ВИПРАВЛЕННЯ ДЛЯ КНОПКИ ВИХОДУ --- */
+/* Якщо кнопка має клас .btn-light або .btn-white, у темній темі вона стане темною */
+body.dark-mode .btn-light,
+body.dark-mode .btn-white {
+    background-color: #3a3b3c !important; /* Темно-сірий колір */
+    color: #ffffff !important;
+    border-color: #505153 !important;
+}
+
+/* Ефект при наведенні для цих кнопок у темній темі */
+body.dark-mode .btn-light:hover,
+body.dark-mode .btn-white:hover {
+    background-color: #505153 !important; /* Трохи світліше при наведенні */
+}
+
+.total-badge {
+    font-size: 1.8rem;
+    font-weight: 700;
+    background: -webkit-linear-gradient(45deg, #11998e, #38ef7d);
+    -webkit-background-clip: text;
+    -webkit-text-fill-color: transparent;
 }
