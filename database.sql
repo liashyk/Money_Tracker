@@ -27,8 +27,15 @@ CREATE TABLE wallets (
 DROP TABLE IF EXISTS transactions;
 CREATE TABLE transactions (
     id INT AUTO_INCREMENT PRIMARY KEY,
+    user_id INT NOT NULL,
+    wallet_id INT NOT NULL,
+    type ENUM('income', 'expense') NOT NULL, 
+    amount DECIMAL(10, 2) NOT NULL,
+    description VARCHAR(255),
     category VARCHAR(50) NOT NULL,
     date DATE NOT NULL,
     FOREIGN KEY (user_id) REFERENCES users(id) ON DELETE CASCADE,
     FOREIGN KEY (wallet_id) REFERENCES wallets(id) ON DELETE CASCADE
 ) CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_ci;
+
+SET FOREIGN_KEY_CHECKS = 1;

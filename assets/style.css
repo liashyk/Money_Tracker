@@ -221,7 +221,7 @@ body.dark-mode input[type="submit"] {
 }
 
 body.dark-mode .btn-success {
-    background-color: #28a745 !important; /* Яскравий зелений для темної теми */
+    background-color: #28a745 !important; /* Яскравий зелений для темної теми */ф
     border-color: #28a745 !important;
     color: #ffffff !important;
 }

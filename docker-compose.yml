@@ -10,8 +10,7 @@ services:
       - DB_NAME=money_tracker
       - DB_USER=root
       - DB_PASS=root
-    # volumes:                <-- ВИДАЛЯЄМО ЦЕ!
-    #   - .:/var/www/html     <-- І ЦЕ! (Ми відключаємо зв'язок з Windows)
+
 
   db:
     image: mysql:8.0
@@ -26,3 +25,4 @@ services:
 
 volumes:
   db_data:
+
